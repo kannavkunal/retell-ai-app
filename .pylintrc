@@ -1,0 +1,17 @@
+[MASTER]
+ignore=.git,__pycache__,.venv,venv,build,dist
+
+[MESSAGES CONTROL]
+disable=C0111,C0103,R0903,W0621
+
+[FORMAT]
+max-line-length=100
+indent-string='    '
+
+[BASIC]
+good-names=i,j,k,ex,Run,_,id,app
+
+[DESIGN]
+min-public-methods=0
+max-args=5
+max-attributes=7
