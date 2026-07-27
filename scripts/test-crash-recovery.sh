@@ -52,15 +52,16 @@ simulate_crash() {
     local crash_num=$1
 
     echo -e "${BLUE}[Crash Test #${crash_num}]${NC}"
-    echo -e "${YELLOW}Simulating crash by force-killing container...${NC}"
+    echo -e "${YELLOW}Simulating crash by killing the main process inside container...${NC}"
 
     # Record the time before crash
     local before_crash=$(date +%s)
 
-    # Force kill the container (simulates crash)
-    docker kill "${CONTAINER_NAME}" > /dev/null 2>&1
+    # Get the main process PID (gunicorn) and kill it to simulate a crash
+    # This is different from 'docker kill' - it simulates the app crashing, not the container being stopped
+    docker exec "${CONTAINER_NAME}" sh -c 'kill -9 1' > /dev/null 2>&1 || true
 
-    echo -e "${RED}✗ Container killed (crash simulated)${NC}"
+    echo -e "${RED}✗ Main process killed (crash simulated)${NC}"
 
     # Wait a moment for Docker to detect the crash
     sleep 2
