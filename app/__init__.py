@@ -1,7 +1,7 @@
 """Flask application factory."""
 from flask import Flask
 from app.config import config
-from app.routes import health_bp
+from app.routes import health_bp, status_bp
 
 
 def create_app(config_name="default"):
@@ -19,5 +19,6 @@ def create_app(config_name="default"):
 
     # Register blueprints
     app.register_blueprint(health_bp)
+    app.register_blueprint(status_bp)
 
     return app
