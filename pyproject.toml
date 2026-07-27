@@ -12,6 +12,13 @@ exclude = '''
 )/
 '''
 
+[tool.coverage.run]
+relative_files = true
+source = ["app"]
+
+[tool.coverage.report]
+show_missing = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
