@@ -4,6 +4,60 @@ Collection of scripts for deploying and managing the Retell AI App.
 
 ## Scripts
 
+### `test-crash-recovery.sh`
+
+Test the auto-restart functionality by simulating container crashes.
+
+**Usage:**
+
+```bash
+# Run 3 crash tests (default)
+./scripts/test-crash-recovery.sh
+
+# Run custom number of crash tests
+NUM_CRASHES=5 ./scripts/test-crash-recovery.sh
+```
+
+**What it does:**
+1. Verifies the container is running with restart policy
+2. Simulates crashes by force-killing the container (`docker kill`)
+3. Monitors auto-restart behavior
+4. Verifies health endpoint after each recovery
+5. Reports recovery time for each crash
+6. Summarizes success/failure of all tests
+
+**Example Output:**
+```
+========================================
+Testing Auto-Restart on Crash
+========================================
+
+Initial Status:
+NAMES           STATUS              PORTS
+retell-ai-app   Up 2 minutes        0.0.0.0:8000->8000/tcp
+
+Restart Policy:
+unless-stopped
+
+Running 3 crash simulations...
+
+[Crash Test #1]
+Simulating crash by force-killing container...
+✗ Container killed (crash simulated)
+Checking if container auto-restarted...
+✓ Container auto-restarted!
+  Recovery time: ~3 seconds
+
+Waiting for health endpoint to respond...
+✓ Health check passed!
+```
+
+**Prerequisites:**
+- Container must be deployed with `./scripts/deploy-local.sh`
+- Container must have restart policy configured
+
+---
+
 ### `deploy-local.sh`
 
 Deploy the Docker image locally from GitHub Container Registry.
